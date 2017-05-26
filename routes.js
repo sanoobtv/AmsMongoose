@@ -1,4 +1,10 @@
 module.exports = function(app, passport) {
+var workDay  = require('./models/workDay');
+var bodyParser = require ('body-parser');
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
 
     // =====================================
     // HOME PAGE (with login links) ========
@@ -36,6 +42,8 @@ module.exports = function(app, passport) {
         res.render('signup.ejs', { message: req.flash('signupMessage') });
     });
 
+
+
     // process the signup form
     // app.post('/signup', do all our passport stuff here);
     app.post('/signup', passport.authenticate('local-signup', {
@@ -49,9 +57,30 @@ module.exports = function(app, passport) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/profile', isLoggedIn, function(req, res) {
-        res.render('profile.ejs', {
-            user : req.user // get the user out of session and pass to template
-        });
+        res.render('profile.ejs', { user : req.user , message: req.flash('datamessage') });
+    });
+
+    app.post('/loadJson', function(req, res){
+      var data = JSON.parse(req.body.jsonData);
+      //console.log(data);
+      workDay.collection.insertMany(data);
+      res.redirect('/profile');
+    });
+    app.get('/viewall', isLoggedIn, function(req, res) {
+        res.render('viewall.ejs', { workDays : null , message: req.flash('shiftmessage') });
+        //console.log(workDays);
+    });
+
+    app.post('/rosterDates', function(req, res){
+      var startDate = req.body.startDate;
+      var endDate = req.body.endDate;
+      //console.log(data);
+      workDay.find({date:{$gte:startDate,$lte:endDate}}, function(err, workDays) {
+        if (err) {throw err; req.flash('shiftmessage', 'Data Not Found')};
+     console.log(workDays[0].staff.length);
+     res.render('viewall.ejs', { workDays : workDays , message: req.flash('shiftmessage') });
+     //res.redirect('/viewall');
+  });
     });
 
     // =====================================
@@ -62,13 +91,9 @@ module.exports = function(app, passport) {
         res.redirect('/');
     });
 
-    app.post('/loadJson', function(req, res){
 
-        // check login form
-        // res.send('user' + req.body);
-        console.log(req.body.jsonData)
-        res.redirect('/profile');
-    });
+
+
 
 };
 

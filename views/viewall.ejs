@@ -1,0 +1,212 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+  <style>
+
+  table.table1 {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  /* Zebra striping */
+   table.table1 tr:nth-of-type(odd) {
+    background: #eee;
+  }
+table.table1  th {
+    background: #333;
+    color: white;
+    font-weight: bold;
+  }
+table.table1 td, table.table1 th {
+    padding: 6px;
+    border: 1px solid #ccc;
+    text-align: left;
+  }
+
+
+  @media
+  only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-device-width: 1024px)  {
+
+  	/* Force table to not be like tables anymore */
+
+  	table.table1 , table.table1 thead,table.table1 tbody,table.table1 th,table.table1 td,table.table1 tr {
+  		display: block;
+  	}
+
+  	/* Hide table headers (but not display: none;, for accessibility) */
+  	table.table1 thead tr {
+  		position: absolute;
+  		top: -9999px;
+  		left: -9999px;
+  	}
+
+  	table.table1 tr { border: 1px solid #ccc; }
+
+  	table.table1 td {
+  		/* Behave  like a "row" */
+  		border: none;
+  		border-bottom: 1px solid #eee;
+  		position: relative;
+  		padding-left: 50%;
+  	}
+
+  	table.table1 td:before {
+  		/* Now like a table header */
+  		position: absolute;
+  		/* Top/left values mimic padding */
+  		top: 6px;
+  		left: 6px;
+  		width: 45%;
+  		padding-right: 10px;
+  		white-space: nowrap;
+  	}
+
+  	/*
+  	Label the data
+  	*/
+  	table.table1 td:nth-of-type(1):before { content: "Date"; }
+  	table.table1 td:nth-of-type(2):before { content: "T1 Early"; }
+  	table.table1 td:nth-of-type(3):before { content: "T1 Swing"; }
+  	table.table1 td:nth-of-type(4):before { content: "T1 Late"; }
+  	table.table1 td:nth-of-type(5):before { content: "T2 Early"; }
+  	table.table1 td:nth-of-type(6):before { content: "T2 Late"; }
+  }
+}
+  </style>
+    <title>AMS Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+          <!-- Javascript -->
+          <script>
+             $(function() {
+                $( "#datepicker-13" ).datepicker();
+                $( "#datepicker-13" ).datepicker("show");
+             });
+
+             $(function() {
+                $( "#datepicker-14" ).datepicker();
+                $( "#datepicker-14" ).datepicker("show");
+             });
+
+             function w3_open() {
+               document.getElementById("mySidebar").style.display = "block";
+                      }
+            function w3_close() {
+              document.getElementById("mySidebar").style.display = "none";
+                      }
+
+                      function myAccFunc() {
+                        var x = document.getElementById("demoAcc");
+                        if (x.className.indexOf("w3-show") == -1) {
+                          x.className += " w3-show";
+                          x.previousElementSibling.className += " w3-green";
+                        } else {
+                          x.className = x.className.replace(" w3-show", "");
+                          x.previousElementSibling.className =
+                          x.previousElementSibling.className.replace(" w3-green", "");
+    }
+}
+          </script>
+
+    </head>
+<body>
+  <div class="w3-sidebar w3-bar-block w3-border-right w3-animate-left" style="display:none" id="mySidebar">
+    <button onclick="w3_close()" class="w3-bar-item w3-large w ">Close &times;</button>
+    <a href="/profile" class="w3-bar-item w3-button w3-light-grey ">Home</a>
+    <div class="w3-dropdown-hover">
+      <button class="w3-button w3-block w3-left-align" onclick="myAccFunc()"> View <i class="fa fa-caret-down"></i>
+    </button>
+        <div id="demoAcc" class="w3-hide w3-white w3-card-2">
+            <a href="/viewall" class="w3-bar-item w3-button">View Roster</a>
+            <a href="#" class="w3-bar-item w3-button">Link</a>
+        </div></div>
+    <a href="#" class="w3-bar-item w3-button  ">Link 3</a>
+    <a href="/logout" class="w3-bar-item w3-button ">Logout</a>
+  </div>
+  <button class="w3-button w3-black w3-large" onclick="w3_open()">☰</button>
+  <div class=" text-center">
+      <h1><span class="fa fa-anchor"></span> Roster Page</h1> </div>
+
+        <!-- LOCAL INFORMATION -->
+
+
+<div class="w3-container w3-mobile text-center">
+  <form action="/rosterDates" method="post" class="rosterDates">
+  <p>Enter  Start Date: <input type = "text" id = "datepicker-13" name="startDate" required="" ></p>
+  <p>Enter End Date: <input type = "text" id = "datepicker-14" name="endDate" required="" ></p>
+  <button class="w3-button w3-black " type="submit">submit</button>
+</form>
+</div>
+
+    <div class="well w3-container">
+        <h3><span class="fa fa-user"></span> Shifts </h3>
+
+
+              <% if (workDays)  {
+                var t1e,t1l,t2e,t2l,s1;
+
+                %>
+
+</div>
+<table class="table1 ">
+	<thead>
+	<tr>
+		<th >Date</th>
+		<th >T1 Early</th>
+		<th >T1Swing</th>
+    <th >T1 Late</th>
+    <th >T2 Early</th>
+    <th >T2 Late</th>
+	</tr>
+	</thead>
+	<tbody>
+
+    <%  for(var i=0 ; i < workDays.length; i++)  { %>
+    <tr>
+		<td><%= workDays[i].date %></td>
+
+    <% for(var j=0 ; j < workDays[i].staff.length; j++)
+    {
+
+if( workDays[i].staff[j].shift =="T1E")
+{
+      t1e=workDays[i].staff[j].name;
+}
+if( workDays[i].staff[j].shift =="T1L")
+{
+      t1l=workDays[i].staff[j].name;
+}
+if( workDays[i].staff[j].shift =="S1")
+{
+      s1=workDays[i].staff[j].name;
+}
+if( workDays[i].staff[j].shift =="T2E")
+{
+      t2e=workDays[i].staff[j].name;
+}
+if( workDays[i].staff[j].shift =="T2L")
+{
+      t2l=workDays[i].staff[j].name;
+}
+  } %>
+<td><%= t1e %></td>
+<td><%= s1 %></td>
+<td><%= t1l %></td>
+<td><%= t2e %></td>
+<td><%= t2l %></td>
+</tr>
+  <% } %>
+	</tbody>
+</table>
+  <% } %>
+</body>
+
+</html>

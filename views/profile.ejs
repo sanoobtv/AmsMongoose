@@ -2,21 +2,76 @@
 <!doctype html>
 <html>
 <head>
+  <script>
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+           }
+ function w3_close() {
+   document.getElementById("mySidebar").style.display = "none";
+           }
+
+           function myAccFunc() {
+             var x = document.getElementById("demoAcc");
+             if (x.className.indexOf("w3-show") == -1) {
+               x.className += " w3-show";
+               x.previousElementSibling.className += " w3-green";
+             } else {
+               x.className = x.className.replace(" w3-show", "");
+               x.previousElementSibling.className =
+               x.previousElementSibling.className.replace(" w3-green", "");
+}
+}
+function myAccFunc1() {
+  var x = document.getElementById("demoAcc1");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+    x.previousElementSibling.className += " w3-green";
+  } else {
+    x.className = x.className.replace(" w3-show", "");
+    x.previousElementSibling.className =
+    x.previousElementSibling.className.replace(" w3-green", "");
+}
+}
+</script>
     <title>AMS Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <style>
-        body        { padding-top:80px; word-wrap:break-word; }
-    </style>
-</head>
+
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+    </head>
 <body>
+  <div class="w3-sidebar w3-bar-block w3-border-right w3-animate-left" style="display:none" id="mySidebar">
+    <button onclick="w3_close()" class="w3-bar-item w3-large w ">Close &times;</button>
+    <a href="/profile" class="w3-bar-item w3-button w3-light-grey ">Home</a>
+    <div class="w3-dropdown-hover">
+      <button class="w3-button w3-block w3-left-align" onclick="myAccFunc()"> View <i class="fa fa-caret-down"></i>
+    </button>
+        <div id="demoAcc" class="w3-hide w3-white w3-card-2">
+            <a href="/viewall" class="w3-bar-item w3-button">View Roster</a>
+            <a href="#" class="w3-bar-item w3-button">View By Shift</a>
+        </div>
+      </div>
+      <div class="w3-dropdown-hover">
+        <button class="w3-button w3-block w3-left-align" onclick="myAccFunc1()"> My Shift <i class="fa fa-caret-down"></i>
+      </button>
+          <div id="demoAcc1" class="w3-hide w3-white w3-card-2">
+              <a href="/viewall" class="w3-bar-item w3-button">Montly</a>
+              <a href="#" class="w3-bar-item w3-button">Swap</a>
+          </div></div>
+    <a href="/logout" class="w3-bar-item w3-button ">Logout</a>
+  </div>
+  <button class="w3-button w3-black w3-large" onclick="w3_open()">☰</button>
 <div class="w3-container">
 
     <div class="page-header text-center">
         <h1><span class="fa fa-anchor"></span> Home Page</h1>
-        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+
+
     </div>
 
     <div class="row">
@@ -40,7 +95,9 @@
             <label>Enter Json Data</label>
             <input class="w3-input" type="text" name="jsonData" >
             <button class="w3-btn w3-blue loadJsonButton" type="submit">Insert</button>
-
+            <% if (message.length > 0) { %>
+                <div class="alert alert-danger"><%= message %></div>
+            <% } %>
         </form>
 
     </div>
