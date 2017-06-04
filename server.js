@@ -7,11 +7,11 @@ var session = require('express-session');
 
 var PORT =process.env.PORT || 3000;
 //express.static
-//app.use(express.static('public'));
+;
 var express = require ('express');
 var bodyParser = require ('body-parser');
 var app=express();
-
+app.use(express.static('public'))
 app.use(bodyParser.urlencoded({
     extended: true
 }));

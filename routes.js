@@ -5,6 +5,16 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
+var resultSet=  workDay.distinct(("staff.name"), function(err,resultSet)
+ {
+   if (err)
+    {
+        throw err;
+    }
+    console.log(resultSet);
+return resultSet;
+  //  res.render('myshift.ejs', { 'shiftdata' : null, 'resultSet' : resultSet , message: req.flash('myshiftmessage') });
+});
 
     // =====================================
     // HOME PAGE (with login links) ========
@@ -69,6 +79,38 @@ app.use(bodyParser.json());
     app.get('/viewall', isLoggedIn, function(req, res) {
         res.render('viewall.ejs', { workDays : null , message: req.flash('shiftmessage') });
         //console.log(workDays);
+    });
+
+    app.get('/myshift', isLoggedIn, function(req, res) {
+        workDay.distinct(("staff.name"), function(err,resultSet)
+       {
+         if (err)
+          {
+              throw err;
+              req.flash('myshiftmessage','Error Encountered')
+          }
+
+          console.log(resultSet);
+          res.render('myshift.ejs', { 'shiftdata' : null, 'resultSet' : resultSet , message: req.flash('myshiftmessage') });
+      });
+    });
+//db.workdays.find({"staff.name":"Sanu"},{"date":1,"staff.$":"Sanu","_id":0}).pretty(){"date":1,"staff.$":"Sanu"}
+   app.post('/myshiftdates', isLoggedIn, function(req, res) {
+        var startDate=req.body.startDate;
+        var endDate=req.body.endDate;
+        var staff=req.body.selectStaff;
+        console.log(resultSet);
+        workDay.find({date:{$gte:startDate,$lte:endDate},"staff.name":staff},{"date":1,"_id":0,"staff.$":staff}, function(err,shiftdata)
+       {
+         if (err)
+          {
+              throw err;
+              req.flash('myshiftmessage','Error Encountered')
+          }
+
+          console.log(JSON.stringify(shiftdata));
+          res.render('myshift.ejs', { 'resultSet' : resultSet, 'shiftdata' : shiftdata , message: req.flash('myshiftmessage') });
+      });
     });
 
     app.post('/rosterDates', function(req, res){

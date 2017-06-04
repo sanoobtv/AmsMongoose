@@ -1,0 +1,69 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+
+    <title>AMS Home</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script src="script.js"></script>
+  </script>
+</head>
+<body>
+
+  <!-- nAVIGATION Div-->
+  <div class="w3-sidebar w3-bar-block w3-border-right w3-animate-left" style="display:none" id="mySidebar">
+    <button onclick="w3_close()" class="w3-bar-item w3-large w ">Close &times;</button>
+    <a href="/profile" class="w3-bar-item w3-button w3-light-grey ">Home</a>
+    <div class="w3-dropdown-hover">
+      <button class="w3-button w3-block w3-left-align" onclick="myAccFunc()"> View <i class="fa fa-caret-down"></i>
+    </button>
+        <div id="demoAcc" class="w3-hide w3-white w3-card-2">
+            <a href="/viewall" class="w3-bar-item w3-button">View Roster</a>
+            <a href="#" class="w3-bar-item w3-button">View By Shift</a>
+        </div>
+      </div>
+      <div class="w3-dropdown-hover">
+        <button class="w3-button w3-block w3-left-align" onclick="myAccFunc1()"> My Shift <i class="fa fa-caret-down"></i>
+      </button>
+          <div id="demoAcc1" class="w3-hide w3-white w3-card-2">
+              <a href="/myshift" class="w3-bar-item w3-button">Montly</a>
+              <a href="#" class="w3-bar-item w3-button">Swap</a>
+          </div></div>
+    <a href="/logout" class="w3-bar-item w3-button ">Logout</a>
+  </div>
+  <button class="w3-button w3-black w3-large" onclick="w3_open()">☰</button>
+    <div class=" text-center"><h1><span class="fa fa-anchor"></span>My Shifts</h1></div>
+<div class="text-centre w3-container w3-blue">
+        <form action="/myshiftdates" method="post" class="myshiftdates">
+          <select class="selectStaff w3-dropdown-click" name="selectStaff">
+          <% if ( resultSet ) {%>
+              <% for(var i=0 ; i < resultSet.length; i++){%>
+                <option name="<%= resultSet[i] %>" value="<%= resultSet[i] %>"><%=resultSet[i]%></option>
+                <% }} %>
+              </select>
+              <p>Enter  Start Date: <input type = "text" id = "datepicker-13" name="startDate" required=""></p>
+              <p>Enter  End Date: <input type = "text" id = "datepicker-14" name="endDate" required="" ></p>
+
+              <button class="ui-btn " type="submit">Submit</button>
+            </form>
+</div>
+
+<% if(shiftdata) { %>
+  <p><%= shiftdata.length %></p><%}%>
+
+
+
+</body>
+
+</html>
