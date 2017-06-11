@@ -5,16 +5,15 @@
 
     <title>AMS Home</title>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="bootstrap.min.css">
-    <link rel="stylesheet" href="font-awesome.min.css">
-    <link rel="stylesheet" href="w3.css">
-
+     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+     <link rel="stylesheet" href="w3.css">
     <link href = "jquery-ui.css" rel = "stylesheet">
-    <script src = "jquery-1.10.2.js"></script>
-    <script src = "jquery-ui.js"></script>
-    <script src="script.js"></script>
-    <link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
-    <script src="jquery.mobile-1.4.5.min.js"></script>
+    <link href = "ViewbyEmpTable.css" rel = "stylesheet">
+     <script src = "jquery-1.10.2.js"></script>
+     <script src = "jquery-ui.js"></script>
+     <script src="script.js"></script>
 
   </script>
 </head>
@@ -43,7 +42,7 @@
   </div>
   <button class="w3-button w3-black w3-large" onclick="w3_open()">☰</button>
     <div class=" text-center"><h1><span class="fa fa-anchor"></span>My Shifts</h1></div>
-<div class="text-centre w3-container w3-blue">
+<div class="text-centre w3-container w3-mobile">
         <form action="/myshiftdates" method="post" class="myshiftdates">
           <select class="selectStaff w3-dropdown-click" name="selectStaff">
           <% if ( resultSet ) {%>
@@ -59,8 +58,22 @@
 </div>
 
 <% if(shiftdata) { %>
-  <p><%= shiftdata.length %></p><%}%>
-
+  <table class="OneEmp ">
+  	<thead>
+  	<tr>
+  		<th >Date</th>
+  		<th >Shift</th>
+  	</tr>
+  	</thead>
+  	<tbody>
+      <%  for(var i=0 ; i < shiftdata.length; i++)  { %>
+      <tr>
+  		<td><%= shiftdata[i].date%></td>
+      <td><%=  shiftdata[i].staff[0].shift %></td>
+    </tr>
+    <% }} %>
+  	</tbody>
+  </table>
 
 
 </body>

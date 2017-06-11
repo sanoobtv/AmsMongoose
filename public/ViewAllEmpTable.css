@@ -1,0 +1,69 @@
+table.table1 {
+  width: 100%;
+  border-collapse: collapse;
+}
+/* Zebra striping */
+ table.table1 tr:nth-of-type(odd) {
+  background: #eee;
+}
+table.table1  th {
+  background: #333;
+  color: white;
+  font-weight: bold;
+}
+table.table1 td, table.table1 th {
+  padding: 6px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+
+@media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+  /* Force table to not be like tables anymore */
+
+  table.table1 , table.table1 thead,table.table1 tbody,table.table1 th,table.table1 td,table.table1 tr {
+    display: block;
+  }
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+  table.table1 thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  table.table1 tr { border: 1px solid #ccc; }
+
+  table.table1 td {
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  table.table1 td:before {
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+
+  /*
+  Label the data
+  */
+  table.table1 td:nth-of-type(1):before { content: "Date"; }
+  table.table1 td:nth-of-type(2):before { content: "T1 Early"; }
+  table.table1 td:nth-of-type(3):before { content: "T1 Swing"; }
+  table.table1 td:nth-of-type(4):before { content: "T1 Late"; }
+  table.table1 td:nth-of-type(5):before { content: "T2 Early"; }
+  table.table1 td:nth-of-type(6):before { content: "T2 Late"; }
+}
+}

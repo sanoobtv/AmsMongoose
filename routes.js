@@ -5,16 +5,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
-var resultSet=  workDay.distinct(("staff.name"), function(err,resultSet)
- {
-   if (err)
-    {
-        throw err;
-    }
-    console.log(resultSet);
-return resultSet;
-  //  res.render('myshift.ejs', { 'shiftdata' : null, 'resultSet' : resultSet , message: req.flash('myshiftmessage') });
-});
+
 
     // =====================================
     // HOME PAGE (with login links) ========
@@ -90,7 +81,7 @@ return resultSet;
               req.flash('myshiftmessage','Error Encountered')
           }
 
-          console.log(resultSet);
+          //console.log(resultSet);
           res.render('myshift.ejs', { 'shiftdata' : null, 'resultSet' : resultSet , message: req.flash('myshiftmessage') });
       });
     });
@@ -99,20 +90,27 @@ return resultSet;
         var startDate=req.body.startDate;
         var endDate=req.body.endDate;
         var staff=req.body.selectStaff;
-        console.log(resultSet);
+
+      //  console.log(JSON.stringify(allstaff));
         workDay.find({date:{$gte:startDate,$lte:endDate},"staff.name":staff},{"date":1,"_id":0,"staff.$":staff}, function(err,shiftdata)
        {
          if (err)
           {
               throw err;
-              req.flash('myshiftmessage','Error Encountered')
+              req.flash('myshiftmessage','Error Encountered');
           }
-
-          console.log(JSON.stringify(shiftdata));
-          res.render('myshift.ejs', { 'resultSet' : resultSet, 'shiftdata' : shiftdata , message: req.flash('myshiftmessage') });
+             workDay.distinct(("staff.name"), function(err,resultSet)
+              {
+                 if (err)
+              {
+              throw err;
+              req.flash('myshiftmessage','Error Encountered');
+              }
+              console.log(JSON.stringify(shiftdata));
+            res.render('myshift.ejs', { 'resultSet' : resultSet, 'shiftdata' : shiftdata , message: req.flash('myshiftmessage') });
       });
     });
-
+});
     app.post('/rosterDates', function(req, res){
       var startDate = req.body.startDate;
       var endDate = req.body.endDate;
@@ -135,6 +133,22 @@ return resultSet;
 
 
 
+    function allEMP() {
+      workDay.distinct(("staff.name"), function(err,rrr)
+     {
+       if (err)
+        {
+            return err;
+        }
+        else {
+          ///console.log(resultSet);
+          return rrr;
+
+        }
+
+
+    });
+    }
 
 
 };
