@@ -1,37 +1,24 @@
 <!-- views/profile.ejs -->
 <!doctype html>
 <html>
+
 <head>
   <script>
+  </script>
+  <title>AMS Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="w3.css">
+  <link href="jquery-ui.css" rel="stylesheet">
 
+  <script src="jquery-1.10.2.js"></script>
+  <script src="jquery-ui.js"></script>
+  <script src="script.js"></script>
 
-</script>
-    <title>AMS Home</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="bootstrap.min.css">
-     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-     <link rel="stylesheet" href="w3.css">
-    <link href = "jquery-ui.css" rel = "stylesheet">
+</head>
 
-     <script src = "jquery-1.10.2.js"></script>
-     <script src = "jquery-ui.js"></script>
-     <script src="script.js"></script>
-    <!--link href = "jquery-ui.css" rel = "stylesheet">
-
-    <script src = "jquery-ui.js"></script>
-    <script src="script.js"></script>
-    <link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
-    <script src="jquery.mobile-1.4.5.min.js"></script >
-
-
-
-    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-
-
-    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></scrip-->
-    </head>
 <body>
   <!-- nAVIGATION Div-->
   <div class="w3-sidebar w3-bar-block w3-border-right w3-animate-left" style="display:none" id="mySidebar">
@@ -40,65 +27,70 @@
     <div class="w3-dropdown-hover">
       <button class="w3-button w3-block w3-left-align" onclick="myAccFunc()"> View <i class="fa fa-caret-down"></i>
     </button>
-        <div id="demoAcc" class="w3-hide w3-white w3-card-2">
-            <a href="/viewall" class="w3-bar-item w3-button">View Roster</a>
-            <a href="#" class="w3-bar-item w3-button">View By Shift</a>
-        </div>
+      <div id="demoAcc" class="w3-hide w3-white w3-card-2">
+        <a href="/viewall" class="w3-bar-item w3-button">View Roster</a>
+        <a href="#" class="w3-bar-item w3-button">View By Shift</a>
       </div>
-      <div class="w3-dropdown-hover">
-        <button class="w3-button w3-block w3-left-align" onclick="myAccFunc1()"> My Shift <i class="fa fa-caret-down"></i>
+    </div>
+    <div class="w3-dropdown-hover">
+      <button class="w3-button w3-block w3-left-align" onclick="myAccFunc1()"> My Shift <i class="fa fa-caret-down"></i>
       </button>
-          <div id="demoAcc1" class="w3-hide w3-white w3-card-2">
-              <a href="/myshift" class="w3-bar-item w3-button">Montly</a>
-              <a href="#" class="w3-bar-item w3-button">Swap</a>
-          </div></div>
+      <div id="demoAcc1" class="w3-hide w3-white w3-card-2">
+        <a href="/myshift" class="w3-bar-item w3-button">Montly</a>
+        <a href="/swapShift" class="w3-bar-item w3-button">Swap</a>
+      </div>
+    </div>
     <a href="/logout" class="w3-bar-item w3-button ">Logout</a>
   </div>
   <button class="w3-button w3-black w3-large" onclick="w3_open()" id="navbar">☰</button>
 
-<div class="w3-container">
+  <div class="w3-container">
 
     <div class="page-header text-center">
-        <h1><span class="fa fa-anchor"></span> Home Page</h1>
+      <h1><span class="fa fa-anchor"></span> Home Page</h1>
 
 
     </div>
 
     <div class="row">
 
-        <!-- LOCAL INFORMATION -->
-        <div class="col-sm-6 w3-container w3-light-grey">
-            <div class="well w3-container">
-                <h3><span class="fa fa-user"></span> Local</h3>
+      <!-- LOCAL INFORMATION -->
+      <div class="col-sm-6 w3-container w3-light-grey">
+        <div class="well w3-container">
+          <h3><span class="fa fa-user"></span> Local</h3>
 
-                    <p>
-                        <strong>id</strong>: <%= user._id %><br>
-                        <strong>email</strong>: <%= user.local.email %><br>
-                        <strong>password</strong>: <%= user.local.password %>
-                    </p>
+          <p>
+            <strong>id</strong>:
+            <%= user._id %><br>
+              <strong>email</strong>:
+              <%= user.local.email %><br>
+                <strong>password</strong>:
+                <%= user.local.password %>
+          </p>
 
-            </div>
         </div>
-        <%if(user.local.email=="asd@asd.com") { %>
+      </div>
+      <%if(user.local.email=="asd@asd.com") { %>
         <form method="post" action="/loadJson" class="w3-container loadJsonForm">
 
-            <label>Enter Json Data</label>
-            <input class="w3-input" type="text" name="jsonData" >
-            <button class="w3-btn w3-blue loadJsonButton" type="submit">Insert</button>
-            <% if (message.length > 0) { %>
-                <div class="alert alert-danger"><%= message %></div>
+          <label>Enter Json Data</label>
+          <input class="w3-input" type="text" name="jsonData">
+          <button class="w3-btn w3-blue loadJsonButton" type="submit">Insert</button>
+          <% if (message.length > 0) { %>
+            <div class="alert alert-danger">
+              <%= message %>
+            </div>
             <% } %>
         </form>
-<%}%>
+        <%}%>
     </div>
 
-</div>
-<script>
-$('button.loadJsonButton').click( function() {
-       $('form.loadJsonForm').submit();
-   });
-
-</script>
+  </div>
+  <script>
+    $('button.loadJsonButton').click(function() {
+      $('form.loadJsonForm').submit();
+    });
+  </script>
 </body>
 
 </html>
