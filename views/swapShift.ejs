@@ -1,0 +1,136 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+
+<head>
+
+  <title>AMS Home- Swap Shift</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="w3.css">
+  <link href="jquery-ui.css" rel="stylesheet">
+  <link href="ViewbyEmpTable.css" rel="stylesheet">
+  <script src="jquery-1.10.2.js"></script>
+  <script src="jquery-ui.js"></script>
+  <script src="script.js"></script>
+
+  </script>
+</head>
+
+<body>
+
+  <!-- nAVIGATION Div-->
+  <div class="w3-sidebar w3-bar-block w3-border-right w3-animate-left" style="display:none" id="mySidebar">
+    <button onclick="w3_close()" class="w3-bar-item w3-large w ">Close &times;</button>
+    <a href="/profile" class="w3-bar-item w3-button w3-light-grey ">Home</a>
+    <div class="w3-dropdown-hover">
+      <button class="w3-button w3-block w3-left-align" onclick="myAccFunc()"> View <i class="fa fa-caret-down"></i>
+    </button>
+      <div id="demoAcc" class="w3-hide w3-white w3-card-2">
+        <a href="/viewall" class="w3-bar-item w3-button">View Roster</a>
+        <a href="#" class="w3-bar-item w3-button">View By Shift</a>
+      </div>
+    </div>
+    <div class="w3-dropdown-hover">
+      <button class="w3-button w3-block w3-left-align" onclick="myAccFunc1()"> My Shift <i class="fa fa-caret-down"></i>
+      </button>
+      <div id="demoAcc1" class="w3-hide w3-white w3-card-2">
+        <a href="/myshift" class="w3-bar-item w3-button">Montly</a>
+        <a href="/swapShift" class="w3-bar-item w3-button">Swap</a>
+      </div>
+    </div>
+    <a href="/logout" class="w3-bar-item w3-button ">Logout</a>
+  </div>
+  <button class="w3-button w3-black w3-large" onclick="w3_open()">☰</button>
+  <div class=" text-center">
+    <h1><span class="fa fa-anchor"></span>Swap Shift</h1>
+  </div>
+<% if(stepLevel==1) {%>
+
+<div class="w3-container w3-blue ">
+  <p class="w3-red w3-small w3-center">Choose First Shift</p>
+  <form action="validateStep1" method="post">
+<input type="text" name="evaluvation"  value="1" hidden="true">
+    <select class="selectStaff w3-dropdown-click" name="selectStaff">
+  <% if ( resultSet ) {%>
+      <% for(var i=0 ; i < resultSet.length; i++){%>
+        <option name="<%= resultSet[i] %>" value="<%= resultSet[i] %>"><%=resultSet[i]%></option>
+        <% }} %>
+      </select>
+    <select class="selectShift w3-dropdown-click" name="selectShift">
+        <option name="T1E" value="T1E">T1E</option>
+        <option name="S1" value="S1">S1</option>
+        <option name="T1L" value="T1L">T1L</option>
+        <option name="T2E" value="T2E">T2E</option>
+        <option name="T2L" value="T2L">T2L</option>
+        </select>
+    <p>Enter First Date: <input type="text" id="datepicker-13" name="startDate" required=""></p>
+    <button class="w3-button w3-hover-red w3-center" type="submit">Validate First Shift</button>
+  </form>
+  <%}%>
+</div>
+
+
+
+<% if(stepLevel==2) {%>
+
+
+  <p class="w3-red w3-small w3-center">Choose Second Shift</p>
+  <form action="validateStep1" method="post">
+    <%if (message) { %>
+      <div class="w3-panel w3-blue w3-center">
+    <p class="w3-red w3-small"><%=message%></p>
+    <input type="text" name="firstShift"  value="<%=validateShift[0].staff[0].shift %>" hidden="true">
+    <input type="text" name="firstName"  value="<%=validateShift[0].staff[0].name %>" hidden="true">
+    <input type="text" name="firstDate"  value="<%=validateShift[0].date %>" hidden="true">
+    <label name="firstDate"><%=validateShift[0].date+ " " + validateShift[0].staff[0].name + " " + validateShift[0].staff[0].shift %><label>
+  <%}%>  </div>
+    <input type="text" name="evaluvation"  value="2" hidden="true">
+    <div class="w3-container w3-blue ">
+    <select class="selectStaff w3-dropdown-click" name="selectStaff">
+  <% if ( resultSet ) {%>
+      <% for(var i=0 ; i < resultSet.length; i++){%>
+        <option name="<%= resultSet[i] %>" value="<%= resultSet[i] %>"><%=resultSet[i]%></option>
+        <% }} %>
+      </select>
+    <select class="selectShift w3-dropdown-click" name="selectShift">
+        <option name="T1E" value="T1E">T1E</option>
+        <option name="S1" value="S1">S1</option>
+        <option name="T1L" value="T1L">T1L</option>
+        <option name="T2E" value="T2E">T2E</option>
+        <option name="T2L" value="T2L">T2L</option>
+        </select>
+    <p>Enter Second Date: <input type="text" id="datepicker-13" name="startDate" required=""></p>
+    <button class="w3-button w3-hover-red w3-center" type="submit">Validate Second Shift</button>
+  </form>
+</div>
+<%}%>
+
+<%if(stepLevel==3){%>
+  <%if (message) { %>
+    <form action="validateStep1" method="post">
+      <input type="text" name="evaluvation" value="3" hidden="true">
+      <div class="w3-panel w3-blue w3-round w3-center w3-small">
+        <p class="w3-small w3-red">First Shift Choosen:</p>
+        <input type="text" name="firstShift" value="<%=firstShift %>" hidden="true">
+        <input type="text" name="firstName" value="<%=firstName %>" hidden="true">
+        <input type="text" name="firstDate" value="<%=firstDate %>" hidden="true">
+        <label name="firstDate"><%=firstDate+ " " + firstName + " " + firstShift %><label></div>
+  <div class="w3-panel w3-blue w3-round w3-center w3-small">
+  <p class="w3-small w3-red">Second Shift Choosen:</p>
+  <input type="text" name="secondShift"  value="<%=validateShift[0].staff[0].shift %>" hidden="true">
+  <input type="text" name="secondName"  value="<%=validateShift[0].staff[0].name %>" hidden="true">
+  <input type="text" name="secondDate"  value="<%=validateShift[0].date %>" hidden="true">
+  <label name="firstDate"><%=validateShift[0].date+ " " + validateShift[0].staff[0].name + " " + validateShift[0].staff[0].shift %><label></div>
+<div class="w3-panel w3-blue w3-round w3-center w3-small">
+  <p><%=message%></p>
+    <button class="w3-button w3-hover-red w3-center" type="submit">Request Approval</button>
+</div>
+</form>
+  <%}%>
+
+<%}%>
+</body>
+</html>
