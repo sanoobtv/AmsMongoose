@@ -76,6 +76,7 @@ module.exports = function(app, passport) {
     isApproved: false
   }, function(err, toapproved) {
     console.log(toapproved);
+
     res.render('profile.ejs', {
       user: req.user,
       toapproved: toapproved,
@@ -248,7 +249,7 @@ res.render('toApprove.ejs')
 
   app.get('/swapShift', function(req, res) {
     stepLevel = 1;
-    workDay.distinct(("staff.name"), function(err, resultSet) {
+      workDay.distinct(("staff.name"), function(err, resultSet) {
       if (err) {
         throw err;
         req.flash('validationMessage', 'Error Encountered');
@@ -266,6 +267,8 @@ app.post('/validateStep1', function(req, res) {
       var date = req.body.startDate;
       var shift = req.body.selectShift;
       var evaluvation = req.body.evaluvation;
+      var email =req.user.local.email;
+      console.log(email);
 
       if (evaluvation === '1') {
         console.log(evaluvation);
@@ -353,14 +356,16 @@ app.post('/validateStep1', function(req, res) {
           'secondShift': secondShift,
           'secondName': secondName,
           'secondDate': secondDate,
+          'submittedBy': email,
           'submitDate': new Date()
+
         });
         if (swap.collection.insert(swap1)) {
           req.flash('validationMessage', 'Swap sumitted for approval');
         } else {
           req.flash('validationMessage', 'Error Encountered');
         }
-
+        console.log(swap1);
         stepLevel = 1;
         workDay.distinct(("staff.name"), function(err, resultSet) {
           if (err) {

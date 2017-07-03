@@ -23,12 +23,13 @@
 
   <!-- nAVIGATION Div-->
 <% include menu.html %>
-    <h1><span class="fa fa-anchor"></span>Swap Shift</h1>
+<div class="page-header text-center">
+    <h2><span class="fa fa-anchor"></span>Swap Shift</h2>
   </div>
 <% if(stepLevel==1) {%>
 
 <div class="w3-container w3-blue ">
-  <p class="w3-red w3-small w3-center">Choose First Shift</p>
+  <p class="w3-indigo w3-small w3-center">Choose First Shift</p>
   <form action="validateStep1" method="post">
 <input type="text" name="evaluvation"  value="1" hidden="true">
     <label for="selectStaff">Choose Staff</label>
@@ -47,8 +48,8 @@
         <option name="T2E" value="T2E">T2E</option>
         <option name="T2L" value="T2L">T2L</option>
         </select>
-    <p>Enter First Date: <input type="text" id="datepicker-13" name="startDate" required=""></p>
-    <div style="text-align: center"><button class="w3-button w3-red" type="submit" >Validate First Shift</button></div>
+    <p>Enter First Date: <input type="text" id="datepicker-13" name="startDate" requiIndigo=""></p>
+    <div style="text-align: center"><button class="w3-button w3-indigo w3-bar" type="submit" >Validate First Shift</button></div>
   </form>
   <%if(message){%>
   <p class="w3-black" style="text-align: center"><%=message %></p>
@@ -60,18 +61,18 @@
 <% if(stepLevel==2) {%>
 
 
-  <p class="w3-red w3-small w3-center">Choose Second Shift</p>
+  <p class="w3-Indigo w3-small w3-center">Choose Second Shift</p>
   <form action="validateStep1" method="post">
     <%if (message) { %>
       <div class="w3-panel w3-blue w3-center">
-    <p class="w3-red w3-small"><%=message%></p>
+    <p class="w3-indigo w3-small w3-bar"><%=message%></p>
     <input type="text" name="firstShift"  value="<%=validateShift[0].staff[0].shift %>" hidden="true">
     <input type="text" name="firstName"  value="<%=validateShift[0].staff[0].name %>" hidden="true">
     <input type="text" name="firstDate"  value="<%=validateShift[0].date %>" hidden="true">
     <label name="firstDate"><%=validateShift[0].date+ " " + validateShift[0].staff[0].name + " " + validateShift[0].staff[0].shift %><label>
   <%}%>  </div>
     <input type="text" name="evaluvation"  value="2" hidden="true">
-    <div class="w3-container w3-blue ">
+    <div class="w3-container w3-blue w3-padding ">
       <label for="selectStaff">Choose Staff</label>
     <select class="selectStaff w3-dropdown-click" name="selectStaff">
   <% if ( resultSet ) {%>
@@ -87,8 +88,8 @@
         <option name="T2E" value="T2E">T2E</option>
         <option name="T2L" value="T2L">T2L</option>
         </select>
-    <p>Enter Second Date: <input type="text" id="datepicker-13" name="startDate" required=""></p>
-  <div style="text-align: center">  <button class="w3-button w3-black " type="submit">Validate Second Shift</button></div>
+    <p>Enter Second Date: <input type="text" id="datepicker-13" name="startDate" requiIndigo=""></p>
+  <div style="text-align: center">  <button class="w3-button w3-indigo w3-bar" type="submit">Validate Second Shift</button></div>
   </form>
 </div>
 <%}%>
@@ -98,20 +99,20 @@
     <form action="validateStep1" method="post">
       <input type="text" name="evaluvation" value="3" hidden="true">
       <div class="w3-panel w3-blue w3-round w3-center w3-small">
-        <p class="w3-small w3-red">First Shift Choosen:</p>
+        <p class="w3-small w3-Indigo">First Shift Choosen:</p>
         <input type="text" name="firstShift" value="<%=firstShift %>" hidden="true">
         <input type="text" name="firstName" value="<%=firstName %>" hidden="true">
         <input type="text" name="firstDate" value="<%=firstDate %>" hidden="true">
-        <label name="firstDate"><%=firstDate+ " " + firstName + " " + firstShift %><label></div>
+        <label name="firstDate" class="w3-large"><%=firstDate+ " " + firstName + " " + firstShift %><label></div>
   <div class="w3-panel w3-blue w3-round w3-center w3-small">
-  <p class="w3-small w3-red">Second Shift Choosen:</p>
+  <p class="w3-small w3-Indigo">Second Shift Choosen:</p>
   <input type="text" name="secondShift"  value="<%=validateShift[0].staff[0].shift %>" hidden="true">
   <input type="text" name="secondName"  value="<%=validateShift[0].staff[0].name %>" hidden="true">
   <input type="text" name="secondDate"  value="<%=validateShift[0].date %>" hidden="true">
-  <label name="firstDate"><%=validateShift[0].date+ " " + validateShift[0].staff[0].name + " " + validateShift[0].staff[0].shift %><label></div>
-<div class="w3-panel w3-blue w3-round w3-center w3-small">
+  <label name="firstDate" class="w3-large"><%=validateShift[0].date+ " " + validateShift[0].staff[0].name + " " + validateShift[0].staff[0].shift %><label></div>
+<div class="w3-panel w3-blue w3-round text-center">
   <p><%=message%></p>
-    <button class="w3-button w3-hover-red w3-center" type="submit">Request Approval</button>
+    <button class="w3-btn w3-indigo w3-bar" type="submit">Request Approval</button>
 </div>
 </form>
   <%}%>

@@ -21,29 +21,7 @@
 
 <body>
   <!-- nAVIGATION Div-->
-  <div class="w3-sidebar w3-bar-block w3-border-right w3-animate-left" style="display:none" id="mySidebar">
-    <button onclick="w3_close()" class="w3-bar-item w3-large w ">Close &times;</button>
-    <a href="/profile" class="w3-bar-item w3-button w3-light-grey ">Home</a>
-    <div class="w3-dropdown-hover">
-      <button class="w3-button w3-block w3-left-align" onclick="myAccFunc()"> View <i class="fa fa-caret-down"></i>
-    </button>
-      <div id="demoAcc" class="w3-hide w3-white w3-card-2">
-        <a href="/viewall" class="w3-bar-item w3-button">View Roster</a>
-        <a href="#" class="w3-bar-item w3-button">View By Shift</a>
-      </div>
-    </div>
-    <div class="w3-dropdown-hover">
-      <button class="w3-button w3-block w3-left-align" onclick="myAccFunc1()"> My Shift <i class="fa fa-caret-down"></i>
-      </button>
-      <div id="demoAcc1" class="w3-hide w3-white w3-card-2">
-        <a href="/myshift" class="w3-bar-item w3-button">Montly</a>
-        <a href="/swapShift" class="w3-bar-item w3-button">Swap</a>
-      </div>
-    </div>
-    <a href="/logout" class="w3-bar-item w3-button ">Logout</a>
-  </div>
-  <button class="w3-button w3-black w3-large" onclick="w3_open()" id="navbar">☰</button>
-
+<% include menu.html %>
   <div class="w3-container">
 
     <div class="page-header text-center">
