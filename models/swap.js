@@ -9,7 +9,10 @@ var swapSchema = new Schema
  firstShift:{type:String, required:true},
  secondDate:{type:String, required:true},
  secondName:{type:String, required:true},
- secondShift:{type:String, required:true}
+ secondShift:{type:String, required:true},
+ isApproved:{type:Boolean,required:true, default:false},
+ submitDate:{type:String},
+ approvedDate:{type:String}
 });
 
 module.exports = mongoose.model('swap',swapSchema);

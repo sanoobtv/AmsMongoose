@@ -1,11 +1,11 @@
 $(function() {
  $( "#datepicker-13" ).datepicker();
- $( "#datepicker-13" ).datepicker("show");
+ //$( "#datepicker-13" ).datepicker("show");
 });
 
 $(function() {
  $( "#datepicker-14" ).datepicker();
- $( "#datepicker-14" ).datepicker("show");
+ //$( "#datepicker-14" ).datepicker("show");
 });
 
 function w3_open() { document.getElementById("mySidebar").style.display = "block";   }

@@ -47,7 +47,7 @@
   <div class="w3-container">
 
     <div class="page-header text-center">
-      <h1><span class="fa fa-anchor"></span> Home Page</h1>
+      <h2><span class="fa fa-anchor"></span> Home Page</h2>
 
 
     </div>
@@ -64,12 +64,20 @@
             <%= user._id %><br>
               <strong>email</strong>:
               <%= user.local.email %><br>
-                <strong>password</strong>:
-                <%= user.local.password %>
-          </p>
-
+              </p>
+          <form action="/findUser" method="post">
+            <div class="w3-center">
+            <button class="w3-btn w3-blue-gray w3-block editUserButton " type="submit" >Edit User</button>
+            </div>
+            <input type="text" name="email_id" hidden="true" value="<%=user.local.email%>">
+          </form>
         </div>
       </div>
+      <% if (toapproved!==0) { %>
+        <div class="alert alert-danger w3-center">
+        <a href="\toApprove">You have <%= toapproved %> Shift Swaps to approve. </a>
+        </div>
+        <% } %>
       <%if(user.local.email=="asd@asd.com") { %>
         <form method="post" action="/loadJson" class="w3-container loadJsonForm">
 

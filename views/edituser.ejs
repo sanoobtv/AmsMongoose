@@ -1,0 +1,52 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+
+<head>
+  <script>
+  </script>
+  <title>AMS Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="w3.css">
+  <link href="jquery-ui.css" rel="stylesheet">
+
+  <script src="jquery-1.10.2.js"></script>
+  <script src="jquery-ui.js"></script>
+  <script src="script.js"></script>
+
+</head>
+
+<body>
+  <!-- nAVIGATION Div-->
+<% include menu.html %>
+
+  <div class="w3-container">
+
+  <div class="page-header text-center">
+    <h3><span class="fa fa-anchor"></span> Edit User Information</h3>
+  </div>
+  <div class=" w3-mobile w3-center w3-blue w3-bar-block">
+    <%if(message){%>
+      <p class="w3-black" style="text-align: center">
+        <%=message %>
+      </p>
+      <%}%>
+        <form action="updateUser" method="post" class="w3-container">
+          <input type="hidden" name="Oid" value="<%=id%>" class="w3-input">
+          <label for="email">Email</label><input type="text" name="email" value="<%=email%>" class="w3-input">
+          <label for="shiftName">Name on Roster</label><input type="text" name="shiftName" value="<%=shiftName%>" required="" class="w3-input">
+          <label for="workPhone">WorkPhone</label><input type="text" name="workPhone" value="<%=workPhone%>" required="" class="w3-input">
+          <button type="submit" class="w3-button " style="color:#d3e3fc">Update</button>
+        </form>
+  </div>
+
+
+
+</div>
+
+</body>
+
+</html>

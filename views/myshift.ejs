@@ -20,40 +20,20 @@
 <body>
 
   <!-- nAVIGATION Div-->
-  <div class="w3-sidebar w3-bar-block w3-border-right w3-animate-left" style="display:none" id="mySidebar">
-    <button onclick="w3_close()" class="w3-bar-item w3-large w ">Close &times;</button>
-    <a href="/profile" class="w3-bar-item w3-button w3-light-grey ">Home</a>
-    <div class="w3-dropdown-hover">
-      <button class="w3-button w3-block w3-left-align" onclick="myAccFunc()"> View <i class="fa fa-caret-down"></i>
-    </button>
-        <div id="demoAcc" class="w3-hide w3-white w3-card-2">
-            <a href="/viewall" class="w3-bar-item w3-button">View Roster</a>
-            <a href="#" class="w3-bar-item w3-button">View By Shift</a>
-        </div>
-      </div>
-      <div class="w3-dropdown-hover">
-        <button class="w3-button w3-block w3-left-align" onclick="myAccFunc1()"> My Shift <i class="fa fa-caret-down"></i>
-      </button>
-          <div id="demoAcc1" class="w3-hide w3-white w3-card-2">
-              <a href="/myshift" class="w3-bar-item w3-button">Montly</a>
-              <a href="#" class="w3-bar-item w3-button">Swap</a>
-          </div></div>
-    <a href="/logout" class="w3-bar-item w3-button ">Logout</a>
-  </div>
-  <button class="w3-button w3-black w3-large" onclick="w3_open()">☰</button>
-    <div class=" text-center"><h1><span class="fa fa-anchor"></span>My Shifts</h1></div>
-<div class="text-centre w3-container w3-mobile">
-        <form action="/myshiftdates" method="post" class="myshiftdates">
-          <select class="selectStaff w3-dropdown-click" name="selectStaff">
+<% include menu.html %>
+<div class=" text-center"><h2><span class="fa fa-anchor"></span>My Shifts</h2></div>
+<div class="text-centre w3-container w3-mobile w3-blue w3-padding">
+        <form action="/myshiftdates" method="post" class="myshiftdates w3-container">
+          <select class="selectStaff w3-dropdown-click w3-bar " name="selectStaff">
           <% if ( resultSet ) {%>
               <% for(var i=0 ; i < resultSet.length; i++){%>
                 <option name="<%= resultSet[i] %>" value="<%= resultSet[i] %>"><%=resultSet[i]%></option>
                 <% }} %>
               </select>
-              <p>Enter  Start Date: <input type = "text" id = "datepicker-13" name="startDate" required=""></p>
-              <p>Enter  End Date: <input type = "text" id = "datepicker-14" name="endDate" required="" ></p>
+              <p>Enter Start Date:<input type = "text" id = "datepicker-13" name="startDate" required=""></p>
+              <p>Enter End Date:<input type = "text" id = "datepicker-14" name="endDate" required="" ></p>
 
-              <button class="ui-btn " type="submit">Submit</button>
+              <button class="w3-button w3-bar w3-indigo" type="submit">Submit</button>
             </form>
 </div>
 
