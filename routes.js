@@ -5,6 +5,7 @@ module.exports = function(app, passport) {
     var contact = require('./models/contact');
     var bodyParser = require('body-parser');
     var email;
+    var dateFormat = require('dateformat');
 
     app.use(bodyParser.urlencoded({
       extended: true
@@ -184,8 +185,23 @@ module.exports = function(app, passport) {
   });
 
 app.get('/toApprove', isLoggedIn ,function(req,res){
-res.render('toApprove.ejs')
 
+var today = new Date();
+
+var firstday=dateFormat(today,'mm/01/yyyy');
+console.log(firstday);
+swap.find({isApproved:false,firstDate:{$gte:firstday}},function(err,swaps){
+  if(err)
+  {
+    throw err;
+    req.flash('myswapmessage', 'Error Encountered');
+  }
+
+  res.render('toApprove.ejs',{
+    'swaps':swaps,
+    message:req.flash('myswapmessage')
+  });
+});
 });
 
   app.post('/myshiftdates', isLoggedIn, function(req, res) {

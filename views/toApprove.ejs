@@ -13,9 +13,14 @@
   <link rel="stylesheet" href="w3.css">
   <link href="jquery-ui.css" rel="stylesheet">
 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
   <script src="jquery-1.10.2.js"></script>
   <script src="jquery-ui.js"></script>
   <script src="script.js"></script>
+
 
 </head>
 
@@ -25,12 +30,61 @@
   <div class="w3-container">
 
     <div class="page-header text-center">
-      <h1><span class="fa fa-anchor"></span> Approve Shif Swaps</h1>
+      <h2><span class="fa fa-anchor"></span> Approve Shift Swaps</h2>
     </div>
+
+    </div>
+
+<%if(message) { %>
+<p><%=message %></p> 
+<%}%>
+<div class="container">
+<div class="panel-group" id="accordion">
+       <%
+for(var i=0;i<swaps.length;i++)
+{
+ %>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#<%=swaps[i]._id%>" class="fa fa-caret-square-o-down"><%=swaps[i].firstName+'-'+swaps[i].firstDate+'<==>'+swaps[i].secondName+'-'+swaps[i].secondDate%></a>
+        </h4>
+      </div>
+      <div id="<%=swaps[i]._id%>" class="panel-collapse collapse out">
+        <div class="panel-body">
+        
+
+        <%=swaps[i]._id%>
+          
+
+
+
+        </div>
+      </div>
+    </div>
+  
+ 
+
+    <% } %>
+   </div>
   </div>
+ 
+
+
+  
 
 
 
 </body>
-
+<script>
+function myFunction() {
+    var x = document.getElementById("Demo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+</script>
 </html>
