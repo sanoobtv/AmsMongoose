@@ -207,9 +207,11 @@ swap.find({isApproved:false,firstDate:{$gte:firstday}},function(err,swaps){
   app.post('/myshiftdates', isLoggedIn, function(req, res) {
     var startDate = req.body.startDate;
     var endDate = req.body.endDate;
-    var staff = req.body.selectStaff;
+    var user1=req.user;
+    console.log(user1.local.shiftName);
+    var staff = user1.local.shiftName;
 
-    //  console.log(JSON.stringify(allstaff));
+    console.log(staff);
     workDay.find({
       date: {
         $gte: startDate,
@@ -225,20 +227,17 @@ swap.find({isApproved:false,firstDate:{$gte:firstday}},function(err,swaps){
         throw err;
         req.flash('myshiftmessage', 'Error Encountered');
       }
-      workDay.distinct(("staff.name"), function(err, resultSet) {
-        if (err) {
-          throw err;
-          req.flash('myshiftmessage', 'Error Encountered');
-        }
-        console.log(JSON.stringify(shiftdata));
-        res.render('myshift.ejs', {
-          'resultSet': resultSet,
+      if(shiftdata.length==0)
+      {
+        req.flash('myshiftmessage', 'No Data Found, Choose another set of dates.');
+      }
+          res.render('myshift.ejs', {
           'shiftdata': shiftdata,
           message: req.flash('myshiftmessage')
         });
       });
     });
-  });
+
 
   app.post('/rosterDates', function(req, res) {
     var startDate = req.body.startDate;

@@ -2,7 +2,9 @@ $(function() {
  $( "#datepicker-13" ).datepicker({
    todayBtn: "linked",
     clearBtn: true,
-    autoclose: true
+    autoclose: true,
+    todayHighlight: true,
+    toggleActive: true
 
  });
 
@@ -11,9 +13,12 @@ $(function() {
 
 $(function() {
  $( "#datepicker-14" ).datepicker({
-  todayBtn: "linked",
-  clearBtn: true,
-  autoclose: true});
+   todayBtn: "linked",
+     clearBtn: true,
+     autoclose: true,
+     todayHighlight: true,
+     toggleActive: true
+   });
  //$( "#datepicker-14" ).datepicker("show");
 });
 

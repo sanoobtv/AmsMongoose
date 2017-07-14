@@ -4,39 +4,38 @@
 <head>
 
     <title>AMS Home</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="bootstrap.min.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-     <link rel="stylesheet" href="w3.css">
-    <link href = "jquery-ui.css" rel = "stylesheet">
-    <link href = "ViewbyEmpTable.css" rel = "stylesheet">
-     <script src = "jquery-1.10.2.js"></script>
-     <script src = "jquery-ui.js"></script>
-     <script src="script.js"></script>
+<link rel="stylesheet" href="w3.css">
+<link href="jquery-ui.css" rel="stylesheet">
+<link href="ViewbyEmpTable.css" rel="stylesheet">
+<script src="jquery-1.10.2.js"></script>
+<script src="jquery-ui.js"></script>
+<script src="script.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
 
-  </script>
+
 </head>
 <body>
 
   <!-- nAVIGATION Div-->
 <% include menu.html %>
 <div class=" text-center"><h2><span class="fa fa-anchor"></span>My Shifts</h2></div>
-<div class="text-centre w3-container w3-mobile w3-blue w3-padding">
-        <form action="/myshiftdates" method="post" class="myshiftdates w3-container">
-          <select class="selectStaff w3-dropdown-click w3-bar " name="selectStaff">
-          <% if ( resultSet ) {%>
-              <% for(var i=0 ; i < resultSet.length; i++){%>
-                <option name="<%= resultSet[i] %>" value="<%= resultSet[i] %>"><%=resultSet[i]%></option>
-                <% }} %>
-              </select>
-              <p>Enter Start Date:<input type = "text" id = "datepicker-13" name="startDate" required=""></p>
-              <p>Enter End Date:<input type = "text" id = "datepicker-14" name="endDate" required="" ></p>
+<div class="w3-container w3-mobile text-center w3-blue w3-padding">
+        <form action="/myshiftdates" method="post" class="myshiftdates">
+              <p>Enter Start Date<input type = "text" id = "datepicker-13" name="startDate" required=""></p>
+              <p>Enter End Date<input type = "text" id = "datepicker-14" name="endDate" required="" ></p>
 
               <button class="w3-button w3-bar w3-indigo" type="submit">Submit</button>
             </form>
 </div>
-
+<%if(message) { %>
+<p><%=message%></p>
+  <% } %>
 <% if(shiftdata) { %>
   <table class="OneEmp ">
   	<thead>
