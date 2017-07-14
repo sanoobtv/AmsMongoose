@@ -1,10 +1,19 @@
 $(function() {
- $( "#datepicker-13" ).datepicker();
+ $( "#datepicker-13" ).datepicker({
+   todayBtn: "linked",
+    clearBtn: true,
+    autoclose: true
+
+ });
+
  //$( "#datepicker-13" ).datepicker("show");
 });
 
 $(function() {
- $( "#datepicker-14" ).datepicker();
+ $( "#datepicker-14" ).datepicker({
+  todayBtn: "linked",
+  clearBtn: true,
+  autoclose: true});
  //$( "#datepicker-14" ).datepicker("show");
 });
 
