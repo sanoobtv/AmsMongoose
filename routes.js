@@ -13,6 +13,11 @@ module.exports = function(app, passport) {
     app.use(bodyParser.json());
     var stepLevel;
 
+    Date.prototype.formatMMDDYYYY = function() {
+      return ("0" + (this.getMonth() + 1)).slice(-2) +
+        "/" + ("0" + this.getDate()).slice(-2) +
+        "/" + this.getFullYear();
+    }
   // =====================================
   // HOME PAGE (with login links) ========
   // =====================================
@@ -206,8 +211,8 @@ swap.find({isApproved:false,firstDate:{$gte:firstday}},function(err,swaps){
 });
 
   app.post('/myshiftdates', isLoggedIn, function(req, res) {
-    var startDate = req.body.startDate;
-    var endDate = req.body.endDate;
+    var startDate = new Date(req.body.startDate).formatMMDDYYYY();
+    var endDate = new Date(req.body.endDate).formatMMDDYYYY();
     var user1=req.user;
     console.log(user1.local.shiftName);
     var staff = user1.local.shiftName;
@@ -241,9 +246,11 @@ swap.find({isApproved:false,firstDate:{$gte:firstday}},function(err,swaps){
 
 
   app.post('/rosterDates', function(req, res) {
-    var startDate = req.body.startDate;
-    var endDate = req.body.endDate;
-    //console.log(data);
+
+var startDate =new Date(req.body.startDate).formatMMDDYYYY();
+var endDate = new Date(req.body.endDate).formatMMDDYYYY();
+
+    console.log("asdasd"+startDate+"   "+endDate);
     workDay.find({
       date: {
         $gte: startDate,
@@ -254,6 +261,7 @@ swap.find({isApproved:false,firstDate:{$gte:firstday}},function(err,swaps){
         throw err;
         req.flash('shiftmessage', 'Data Not Found')
       };
+      console.log(workDays);
         res.render('viewall.ejs', {
         workDays: workDays,
         message: req.flash('shiftmessage')
@@ -295,7 +303,7 @@ app.get('/delegateShift',isLoggedIn, function(req, res) {
 
 app.post('/delegateForm', function(req, res) {
   var firstName = req.user.local.shiftName;
-  var date = req.body.startDate;
+  var date = new Date(req.body.startDate).formatMMDDYYYY();
   var secondName = req.body.selectStaff;
   var shift = req.body.selectShift;
   var email = req.user.local.email;
@@ -352,11 +360,11 @@ app.post('/delegateForm', function(req, res) {
 });
 
 app.post('/approveswap', function(req,res){
-var firstDate=req.body.firstDate;
+var firstDate=new Date(req.body.firstDate).formatMMDDYYYY();;
 var firstName=req.body.firstName;
 var firstShift=req.body.firstShift;
 var secondName=req.body.secondName;
-var secondDate=req.body.secondDate;
+var secondDate=new Date(req.body.secondDate).formatMMDDYYYY();
 var secondShift=req.body.secondShift;
 var swapType=req.body.swapType;
 var id=req.body.id;
@@ -404,7 +412,7 @@ var secondShift=req.body.secondShift;
 //reaally long form for swapping including step level to check the step in form and validation form.
 app.post('/validateStep1', function(req, res) {
       var name = req.body.selectStaff;
-      var date = req.body.startDate;
+      var date = new Date(req.body.startDate).formatMMDDYYYY();
       var shift = req.body.selectShift;
       var evaluvation = req.body.evaluvation;
       var email =req.user.local.email;
@@ -445,7 +453,7 @@ app.post('/validateStep1', function(req, res) {
       if (evaluvation === '2') {
         var firstShift = req.body.firstShift;
         var firstName = req.body.firstName;
-        var firstDate = req.body.firstDate;
+        var firstDate = new Date(req.body.firstDate).formatMMDDYYYY();
         console.log(firstDate + firstName + firstShift);
         stepLevel = 2;
         workDay.find({
