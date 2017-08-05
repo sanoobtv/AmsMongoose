@@ -97,7 +97,7 @@ module.exports = function(app, passport) {
   app.post('/loadJson', function(req, res) {
     var data = JSON.parse(req.body.jsonData);
     //console.log(data);
-    workDay.collection.insertMany(data);
+    workDay.collection.insertMany(data,{safe:true,upsert:true});
     res.redirect('/profile');
   });
 
@@ -261,7 +261,7 @@ var endDate = new Date(req.body.endDate).formatMMDDYYYY();
         throw err;
         req.flash('shiftmessage', 'Data Not Found')
       };
-      console.log(workDays);
+      console.log(JSON.stringify(workDays));
         res.render('viewall.ejs', {
         workDays: workDays,
         message: req.flash('shiftmessage')
