@@ -384,6 +384,10 @@ if(swapType ===" Delegated ")
 else
 {
   console.log("Swapping choosen");
+  workDay.update({'date':firstDate,'staff.shift':firstShift},{'$set':{'staff.$.name':secondName}},function(err,respon){console.log(respon);});
+
+  workDay.update({'date':secondDate,'staff.shift':secondShift},{'$set':{'staff.$.name':firstName}},function(err,respon){console.log(respon);});
+
 }
 
 });
