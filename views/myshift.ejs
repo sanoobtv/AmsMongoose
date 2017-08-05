@@ -33,8 +33,8 @@
               <button class="w3-button w3-bar w3-indigo" type="submit">Submit</button>
             </form>
 </div>
-<%if(message) { %>
-<p><%=message%></p>
+<%if(message.length<0) { %>
+<div class="w3-panel w3-red"><p><%=message%></p></div>
   <% } %>
 <% if(shiftdata) { %>
   <table class="OneEmp ">

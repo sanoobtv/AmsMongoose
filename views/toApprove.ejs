@@ -36,43 +36,102 @@
     </div>
 
 <%if(message) { %>
-<p><%=message %></p> 
+<p><%=message %></p>
 <%}%>
 <div class="container">
 <div class="panel-group" id="accordion">
-       <%
+ <%
 for(var i=0;i<swaps.length;i++)
 {
+  %>
+  <%
+var swapped;
+var colour;
+if((swaps[i].firstShift === swaps[i].secondShift)&&(swaps[i].firstDate === swaps[i].secondDate))
+  {
+    swapped=" Delegated ";
+    colour="w3-light-blue";
+  }
+  else
+  {
+    swapped=" Swapped ";
+    colour="w3-blue"
+  }
  %>
 
     <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#<%=swaps[i]._id%>" class="fa fa-caret-square-o-down"><%=swaps[i].firstName+'-'+swaps[i].firstDate+'<==>'+swaps[i].secondName+'-'+swaps[i].secondDate%></a>
+      <div class="panel-heading <%= colour %>">
+        <h4 class="panel-title w3-white w3-small">
+          <a data-toggle="collapse" data-parent="#accordion" href="#<%=swaps[i]._id%>" ><%=swaps[i].firstName+'-'+swaps[i].firstDate+swapped+swaps[i].secondName+'-'+swaps[i].secondDate%></a>
         </h4>
       </div>
       <div id="<%=swaps[i]._id%>" class="panel-collapse collapse out">
         <div class="panel-body">
-        
+        <form action="submitApprove" method="post">
+          <input type="text" name="swapType"  value="<%=swapped %>" hidden="true">
+          <input type="text" name="id"  value="<%=swaps[i]._id %>" hidden="true">
+          <input type="text" name="firstShift"  value="<%=swaps[i].firstShift %>" hidden="true">
+          <input type="text" name="firstName"  value="<%=swaps[i].firstName %>" hidden="true">
+          <input type="text" name="firstDate"  value="<%=swaps[i].firstDate %>" hidden="true">
+          <input type="text" name="secondName"  value="<%=swaps[i].secondName %>" hidden="true">
+          <input type="text" name="secondShift"  value="<%=swaps[i].secondShift %>" hidden="true">
+          <input type="text" name="secondDate"  value="<%=swaps[i].secondDate %>" hidden="true">
+          <input type="text" name="submitDate"  value="<%=swaps[i].submitDate %>" hidden="true">
+          <input type="text" name="submittedBy"  value="<%=swaps[i].submittedBy %>" hidden="true">
 
-        <%=swaps[i]._id%>
-          
-
-
-
-        </div>
+<table class="w3-table-all">
+  <tr>
+    <th>First Shift</th>
+    <th>Second Shift</th>
+  </tr>
+  <tr>
+    <td>
+      <%= swaps[i].firstDate%>
+    </td>
+    <td>
+      <%= swaps[i].secondDate%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= swaps[i].firstShift %>
+    </td>
+    <td>
+      <%= swaps[i].secondShift%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= swaps[i].firstName%>
+    </td>
+    <td>
+      <%= swaps[i].secondName%>
+    </td>
+  </tr>
+</table>
+<p class="w3-panel w3-gray">Submit Date:
+  <%= swaps[i].submitDate%>
+</p>
+<p class="w3-panel w3-gray">Email:
+  <%= swaps[i].submittedBy%>
+</p>
+<div class="w3-center">
+<button type="submit" class="btn w3-blue" formaction="/approveswap">Approve</button>
+<button type="submit" class="btn w3-red" formaction="/deleteswap">Delete</button>
+</div>
+</form>        </div>
       </div>
     </div>
-  
- 
+
+
 
     <% } %>
    </div>
   </div>
- 
 
 
-  
+
+
 
 
 
@@ -82,7 +141,7 @@ function myFunction() {
     var x = document.getElementById("Demo");
     if (x.className.indexOf("w3-show") == -1) {
         x.className += " w3-show";
-    } else { 
+    } else {
         x.className = x.className.replace(" w3-show", "");
     }
 }

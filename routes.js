@@ -84,6 +84,7 @@ module.exports = function(app, passport) {
       message: req.flash('datamessage')
     });
   });
+  req.session.user=user;
 });
 
 //a form request from profile page, take raw Json DATA to populate workdays
@@ -253,8 +254,7 @@ swap.find({isApproved:false,firstDate:{$gte:firstday}},function(err,swaps){
         throw err;
         req.flash('shiftmessage', 'Data Not Found')
       };
-      console.log(workDays[0].staff.length);
-      res.render('viewall.ejs', {
+        res.render('viewall.ejs', {
         workDays: workDays,
         message: req.flash('shiftmessage')
       });
@@ -262,7 +262,7 @@ swap.find({isApproved:false,firstDate:{$gte:firstday}},function(err,swaps){
     });
   });
 
-  app.get('/swapShift', function(req, res) {
+  app.get('/swapShift', isLoggedIn, function(req, res) {
     stepLevel = 1;
       workDay.distinct(("staff.name"), function(err, resultSet) {
       if (err) {
@@ -277,6 +277,131 @@ swap.find({isApproved:false,firstDate:{$gte:firstday}},function(err,swaps){
       });
     });
   });
+
+//get form for delegate shift, rendering with staff names , and current username
+app.get('/delegateShift',isLoggedIn, function(req, res) {
+  var myName= req.user.local.shiftName;
+  console.log(myName);
+  workDay.distinct(("staff.name"), function(err, resultSet) {
+    console.log(resultSet);
+    req.session.selectStaff=resultSet;
+    res.render('delegateShift.ejs', {
+      'resultSet': resultSet,
+      'myName':myName,
+       message: ''
+    });
+  });
+});
+
+app.post('/delegateForm', function(req, res) {
+  var firstName = req.user.local.shiftName;
+  var date = req.body.startDate;
+  var secondName = req.body.selectStaff;
+  var shift = req.body.selectShift;
+  var email = req.user.local.email;
+  var myName= req.user.local.shiftName;
+  var isAvailable = 1;
+  workDay.find({date:date},{'staff':{$elemMatch:{'name':secondName}}, '_id':0},
+  function(err,data)
+  {
+  //  console.log(JSON.stringify(data[0].staff[0].name));
+    var temp= JSON.stringify(data);
+    console.log(temp.length+temp);
+
+    if(temp.length>14)
+       isAvailable=0;
+     workDay.find({ date: date, 'staff.shift': shift }, {'staff.$': firstName, 'date': 1 },  function(err, validateShift) {
+      if (err) {
+        throw err;
+        req.flash('validationMessage', 'Error Encountered');
+      }
+      console.log(isAvailable+'outside');
+      if ((firstName === validateShift[0].staff[0].name)&& isAvailable)
+       {
+        var delSwap = new swap({
+          'firstShift': shift,
+          'firstName': firstName,
+          'firstDate': date,
+          'secondShift': shift,
+          'secondName': secondName,
+          'secondDate': date,
+          'submittedBy': email,
+          'submitDate': new Date()
+        });
+        if (swap.collection.insert(delSwap))
+         {
+          req.flash('validationMessage', 'Shift located and Submitted for Approval');
+        } else
+        {
+          req.flash('validationMessage', 'Error submitting shift for approval');
+        }
+
+      }
+      else
+      {
+        req.flash('validationMessage', 'Selected Shift is invalid Or '+ secondName + ' already has a shift on the choosen day');
+      }
+      res.render('delegateShift.ejs', {
+        'resultSet': req.session.selectStaff,
+        'myName':myName,
+         message: req.flash('validationMessage')
+});
+});
+
+});
+});
+
+app.post('/approveswap', function(req,res){
+var firstDate=req.body.firstDate;
+var firstName=req.body.firstName;
+var firstShift=req.body.firstShift;
+var secondName=req.body.secondName;
+var secondDate=req.body.secondDate;
+var secondShift=req.body.secondShift;
+var swapType=req.body.swapType;
+var id=req.body.id;
+console.log(req.body);
+
+workDay.find({date:firstDate},function(err,day){
+var firstday=new workDay();
+firstday=day;
+console.log(firstday[0].staff);
+if(swapType ===" Delegated ")
+{
+  console.log("Delegation Choosen");
+  workDay.update({'date':firstDate,'staff.shift':firstShift},{'$set':{'staff.$.name':secondName}},function(err,respon){console.log(respon);});
+
+
+}
+else
+{
+  console.log("Swapping choosen");
+}
+
+});
+
+
+
+
+
+
+
+
+});
+
+app.post('/deleteswap', function(req,res){
+var firstDate=req.body.firstDate;
+var firstName=req.body.firstName;
+var firstShift=req.body.firstShift;
+var secondName=req.body.secondName;
+var secondDate=req.body.secondDate;
+var secondShift=req.body.secondShift;
+});
+
+
+
+
+//reaally long form for swapping including step level to check the step in form and validation form.
 app.post('/validateStep1', function(req, res) {
       var name = req.body.selectStaff;
       var date = req.body.startDate;
@@ -406,6 +531,11 @@ app.post('/validateStep1', function(req, res) {
     res.redirect('/');
   });
 
+  function  validateShift ( name, shift, date, next)
+  {
+    console.log("calling validateShift");
+
+  }
 
 };
 
@@ -420,3 +550,6 @@ function isLoggedIn(req, res, next) {
   // if they aren't redirect them to the home page
   res.redirect('/');
 }
+
+
+//trying to create a function to serch if there is an existing shift matching the passed argument, returns bool

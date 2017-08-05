@@ -1,0 +1,49 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+  <title>AMS Home- Swap Shift</title>
+  <% include linkref.html %>
+</head>
+<body>
+
+  <!-- nAVIGATION Div-->
+<% include menu.html %>
+  <div class="page-header text-center">
+    <h2><span class="fa fa-anchor"></span>Swap Shift</h2>
+  </div>
+
+<div class="w3-container w3-blue ">
+  <p class="w3-indigo w3-small w3-center">Choose Shift</p>
+  <form action="delegateForm" method="post">
+    <label for="selectShift">Shift</label>
+    <select class="selectShift w3-dropdown-click" name="selectShift">
+        <option name="T1E" value="T1E">T1E</option>
+        <option name="S1" value="S1">S1</option>
+        <option name="T1L" value="T1L">T1L</option>
+        <option name="T2E" value="T2E">T2E</option>
+        <option name="T2L" value="T2L">T2L</option>
+        </select>
+    <p>Choose  Date: <input type="text" id="datepicker-15" name="startDate" required=""></p>
+    <select class="selectStaff w3-dropdown-click" name="selectStaff">
+  <% if ( resultSet ) { %>
+  <% for(var i=0 ; i < resultSet.length; i++)
+      {
+if(resultSet[i]!=myName)
+{
+        %>
+    <option name="<%= resultSet[i] %>" value="<%= resultSet[i] %>">
+      <%=resultSet[i]%>
+    </option>
+    <% }}} %>
+      </select>
+    <div style="text-align: center"><button class="w3-button w3-indigo w3-bar" type="submit" >Validate and Submit for approval.</button></div>
+  </form>
+
+</div>
+<% if(message) { %>
+<div class="w3-panel w3-red w3-card-4"><p><%= message%></p> </div>
+<% } %>
+
+</body>
+</html>

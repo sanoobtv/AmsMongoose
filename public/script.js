@@ -7,8 +7,7 @@ $(function() {
     toggleActive: true
 
  });
-
- //$( "#datepicker-13" ).datepicker("show");
+  //$( "#datepicker-13" ).datepicker("show");
 });
 
 $(function() {
@@ -18,6 +17,20 @@ $(function() {
      autoclose: true,
      todayHighlight: true,
      toggleActive: true
+   });
+ //$( "#datepicker-14" ).datepicker("show");
+});
+
+$(function() {
+
+
+ $( "#datepicker-15" ).datepicker({
+   todayBtn: "linked",
+     clearBtn: true,
+     autoclose: true,
+     todayHighlight: true,
+     toggleActive: true,
+     startDate:new Date()
    });
  //$( "#datepicker-14" ).datepicker("show");
 });
