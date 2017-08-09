@@ -378,18 +378,17 @@ if(swapType ===" Delegated ")
 {
   console.log("Delegation Choosen");
   workDay.update({'date':firstDate,'staff.shift':firstShift},{'$set':{'staff.$.name':secondName}},function(err,respon){console.log(respon);});
-
+  swap.update({'_id':id},{'$set':{isApproved:'true',approvedDate:new Date()}},function(err,respon){console.log(respon);});
 
 }
 else
 {
   console.log("Swapping choosen");
   workDay.update({'date':firstDate,'staff.shift':firstShift},{'$set':{'staff.$.name':secondName}},function(err,respon){console.log(respon);});
-
   workDay.update({'date':secondDate,'staff.shift':secondShift},{'$set':{'staff.$.name':firstName}},function(err,respon){console.log(respon);});
-
+  swap.update({'_id':id},{'$set':{isApproved:'true',approvedDate:new Date()}},function(err,respon){console.log(respon);});
 }
-
+res.redirect('toApprove');
 });
 
 

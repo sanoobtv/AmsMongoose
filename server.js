@@ -30,7 +30,7 @@ require('./config/passport')(passport);
 var configDB = require('./config/database.js');
 var workDay  = require('./models/workDay');
 // configuration ===============================================================
-mongoose.connect(configDB.url); // connect to our database
+mongoose.connect(process.env.MONGOLAB_URI||configDB.url); // connect to our database
 var options = { server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
                 replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS : 30000 } } };
 
